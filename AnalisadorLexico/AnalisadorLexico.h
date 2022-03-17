@@ -10,7 +10,7 @@
 
 typedef struct NoPilha *PtrNoPilha;
 
-typedef struct NoPilha{
+typedef struct NoPilha {
 	char simbolo;
 	PtrNoPilha proximo;
 } NoPilha;
@@ -23,15 +23,22 @@ typedef struct {
 // Funções Pilha
 
 void inicializaPilha(Pilha *pilha);
+
 bool estaVazia(Pilha *pilha);
+
 void empilha(Pilha *pilha, char c);
+
 char topoPilha(Pilha *pilha);
+
 void desempilha(Pilha *pilha);
+
 void destroiPilha(Pilha *pilha);
 
 // Automato
 
-bool automato(char *string)
+bool automato(char *string);
+
+bool debug = false;
 
 
 #endif //COMPILADORES_ANALISADORLEXICO_H
