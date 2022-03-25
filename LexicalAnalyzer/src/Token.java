@@ -8,9 +8,9 @@ public class Token {
     }
 
     // Construtor para gerar um token com nome e lexema
-    public Token(TipoToken name, String lexeme) {
-        this.nome = name;
-        this.lexema = lexeme;
+    public Token(TipoToken nome, String lexema) {
+        this.nome = nome;
+        this.lexema = lexema;
     }
 
     // Metodo para transformar um Token em uma String

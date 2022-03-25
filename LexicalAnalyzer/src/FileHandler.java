@@ -7,8 +7,8 @@ public class FileHandler {
     private FileInputStream fis;
     private Scanner sc;
 
+    // Construtor que abre o arquivo
     public FileHandler(String fileName) {
-        // Abre o arquivo
         try {
             fis = new FileInputStream(fileName);
         } catch(FileNotFoundException fnf) {
@@ -19,10 +19,10 @@ public class FileHandler {
         sc = new Scanner(fis);
     }
 
-    public ArrayList<String> getNextLine() {
+    // Metodo para ler todas as linhas do arquivo e retorna-los em uma lista
+    public ArrayList<String> getLines() {
         ArrayList<String> lines = new ArrayList<String>();
 
-        // Se o arquivo possuir mais uma linha para ser lida, retorna o conteúdo da linha
         while(sc.hasNextLine()) {
             lines.add(sc.nextLine());
         }
