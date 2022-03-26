@@ -15,7 +15,7 @@ public class GyhLex {
 
         ArrayList<String> linhas = fileHandler.getLines();
 
-        for(String linha : linhas) {
+        for (String linha : linhas) {
             // Se a linha for vazia é ignorada;
             if (linha.isEmpty())
                 continue;
@@ -113,7 +113,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.OpRelIgual, "=="));
                         } else {
                             // Se não for == mostra um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -134,7 +134,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.OpRelDif, "!="));
                         } else {
                             // Se não for != mostra um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -145,7 +145,7 @@ public class GyhLex {
                             estado = 6;
                         } else {
                             // D deve ser seguido de um E, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -156,7 +156,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCDec, "DEC"));
                         } else {
                             // DE deve ser seguido de um C, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -167,7 +167,7 @@ public class GyhLex {
                             estado = 8;
                         } else {
                             // P deve ser seguido de um R, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -178,7 +178,7 @@ public class GyhLex {
                             estado = 9;
                         } else {
                             // PR deve ser seguido de um O, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -189,7 +189,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCProg, "PROG"));
                         } else {
                             // PRO deve ser seguido de um G, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -202,7 +202,7 @@ public class GyhLex {
                             estado = 12;
                         } else {
                             // I deve ser seguido de um N ou M, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -215,7 +215,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCInt, "INT"));
                         } else {
                             // IN deve ser seguido de um I ou T, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -226,7 +226,7 @@ public class GyhLex {
                             estado = 13;
                         } else {
                             // IM deve ser seguido de um P, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -237,7 +237,7 @@ public class GyhLex {
                             estado = 14;
                         } else {
                             // IMP deve ser seguido de um R, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -248,7 +248,7 @@ public class GyhLex {
                             estado = 15;
                         } else {
                             // IMPR deve ser seguido de um I, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -259,7 +259,7 @@ public class GyhLex {
                             estado = 16;
                         } else {
                             // IMPRI deve ser seguido de um M, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -270,7 +270,7 @@ public class GyhLex {
                             estado = 17;
                         } else {
                             // IMPRIM deve ser seguido de um I, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -281,7 +281,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCImprimir, "IMPRIMIR"));
                         } else {
                             // IMPRIMI deve ser seguido de um R, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -292,7 +292,7 @@ public class GyhLex {
                             estado = 19;
                         } else {
                             // L deve ser seguido de um E, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -303,7 +303,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCLer, "LER"));
                         } else {
                             // LE deve ser seguido de um R, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -314,7 +314,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCSe, "SE"));
                         } else {
                             // S deve ser seguido de um E, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -338,7 +338,7 @@ public class GyhLex {
                             estado = 25;
                         } else {
                             // EN deve ser seguido de um Q ou T, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -349,7 +349,7 @@ public class GyhLex {
                             estado = 24;
                         } else {
                             // ENQ deve ser seguido de um T, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -360,7 +360,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCEnqto, "ENQTO"));
                         } else {
                             // ENQT deve ser seguido de um O, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -371,7 +371,7 @@ public class GyhLex {
                             estado = 26;
                         } else {
                             // ENT deve ser seguido de um A, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -382,7 +382,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCEntao, "ENTAO"));
                         } else {
                             // ENTA deve ser seguido de um O, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -393,7 +393,7 @@ public class GyhLex {
                             estado = 28;
                         } else {
                             // F deve ser seguido de um I, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -404,7 +404,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCFim, "FIM"));
                         } else {
                             // FI deve ser seguido de um M, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -415,7 +415,7 @@ public class GyhLex {
                             estado = 30;
                         } else {
                             // R deve ser seguido de um E, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -426,7 +426,7 @@ public class GyhLex {
                             estado = 31;
                         } else {
                             // RE deve ser seguido de um A, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                             estado = 0;
                         }
@@ -437,7 +437,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.PCReal, "REAL"));
                         } else {
                             // REA deve ser seguido de um L, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -448,7 +448,7 @@ public class GyhLex {
                             tokens.add(new Token(TipoToken.OpBoolOu, "OU"));
                         } else {
                             // O deve ser seguido de um U, ou aponta um erro lexico
-                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i+1));
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
                         }
                         estado = 0;
@@ -492,7 +492,7 @@ public class GyhLex {
 
                     case 37:
                         if (c == '"') {
-                            tokens.add(new Token(TipoToken.Cadeia, linha.substring(varIndex+1, i)));
+                            tokens.add(new Token(TipoToken.Cadeia, linha.substring(varIndex + 1, i)));
                             i--;
                             estado = 0;
                         }

@@ -11,7 +11,7 @@ public class FileHandler {
     public FileHandler(String fileName) {
         try {
             fis = new FileInputStream(fileName);
-        } catch(FileNotFoundException fnf) {
+        } catch (FileNotFoundException fnf) {
             fnf.printStackTrace();
         }
 
@@ -23,7 +23,7 @@ public class FileHandler {
     public ArrayList<String> getLines() {
         ArrayList<String> lines = new ArrayList<String>();
 
-        while(sc.hasNextLine()) {
+        while (sc.hasNextLine()) {
             lines.add(sc.nextLine());
         }
 
