@@ -7,16 +7,20 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Token> tokens;
 
-        System.out.println("----------------------- Erros -----------------------");
-
-        // Chama o construtor da classe GyhLex
+        System.out.println("---------- Erros Léxicos ----------");
         GyhLexico lex = new GyhLexico(args[0]);
-        // Salva os tokens retornados
         tokens = lex.tokenizer();
+        System.out.println("-----------------------------------");
+        System.out.println();
 
-        System.out.println("-----------------------------------------------------");
-
-        // Mostra os tokens retornados
+        System.out.println("---------- Tokens Gerados ----------");
         tokens.forEach(System.out::println);
+        System.out.println("------------------------------------");
+        System.out.println();
+
+        System.out.println("---------- Analisador Sintático ----------");
+        GyhSintatico sint = new GyhSintatico(tokens);
+        sint.programa();
+        System.out.println("------------------------------------------");
     }
 }
