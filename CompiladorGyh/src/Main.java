@@ -13,15 +13,15 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Token> tokens;
 
-        System.out.println("---------- Erros Léxicos ----------");
+        System.out.println("------------- Erros Léxicos --------------");
         GyhLexico lex = new GyhLexico(args[0]);
         tokens = lex.tokenizer();
-        System.out.println("-----------------------------------");
+        System.out.println("------------------------------------------");
         System.out.println();
 
-        System.out.println("---------- Tokens Gerados ----------");
+        System.out.println("------------- Tokens Gerados -------------");
         tokens.forEach(System.out::println);
-        System.out.println("------------------------------------");
+        System.out.println("------------------------------------------");
         System.out.println();
 
         System.out.println("---------- Analisador Sintático ----------");
