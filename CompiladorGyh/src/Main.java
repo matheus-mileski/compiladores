@@ -1,5 +1,11 @@
 // Julio Ribeiro e Matheus Mileski
-// Vídeo: https://www.youtube.com/watch?v=e4KjLvzrIB4
+// Vídeos:
+// - Analisador Léxico: https://www.youtube.com/watch?v=e4KjLvzrIB4
+// - Analisador Sintático:
+
+// TODO: Verificar erro do IMPRIMIR - Caso seja uma cadeia sem as aspas no final, a cadeira será ignorada - OK
+// TODO: Adicionar SENAO ao Analisador Lexico - OK
+// TODO: Verificar FatorAritmetico com Numero Real - No slide 3 das especificações parece que tem o NUMREAL no FatorAritmetico, tem que verificar - X
 
 import java.util.ArrayList;
 

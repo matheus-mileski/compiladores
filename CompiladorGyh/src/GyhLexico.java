@@ -310,13 +310,13 @@ public class GyhLexico {
 
                     case 20:
                         if (c == 'E') {
-                            tokens.add(new Token(TipoToken.PCSe, "SE"));
+                            estado = 38;
                         } else {
                             // S deve ser seguido de um E, ou aponta um erro lexico
                             System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
                             i--;
+                            estado = 0;
                         }
-                        estado = 0;
                         break;
 
                     case 21:
@@ -495,6 +495,38 @@ public class GyhLexico {
                             i--;
                             estado = 0;
                         }
+                        break;
+
+                    case 38:
+                        if (c == 'N') {
+                            estado = 39;
+                        } else {
+                            tokens.add(new Token(TipoToken.PCSe, "SE"));
+                            i--;
+                            estado = 0;
+                        }
+                        break;
+
+                    case 39:
+                        if (c == 'A') {
+                            estado = 40;
+                        } else {
+                            // SEN deve ser seguido de um A, ou aponta um erro lexico
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
+                            i--;
+                            estado = 0;
+                        }
+                        break;
+
+                    case 40:
+                        if (c == 'O') {
+                            tokens.add(new Token(TipoToken.PCSenao, "SENAO"));
+                        } else {
+                            // SENA deve ser seguido de um O, ou aponta um erro lexico
+                            System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
+                        }
+                        i--;
+                        estado = 0;
                         break;
 
                     default:
