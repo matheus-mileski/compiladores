@@ -54,12 +54,12 @@ public class GyhSintatico {
     }
 
     void erroSintatico(String... tokens) {
-        String mensagem = "Erro sintatico -> Esperado [ ";
+        StringBuilder mensagem = new StringBuilder("Erro sintatico -> Esperado [ ");
         for (int i = 0; i < tokens.length; i++)
-            mensagem += tokens[i] += " ";
-        mensagem += "] mas foi encontrado " + lookahead(1);
+            mensagem.append(tokens[i] += " ");
+        mensagem.append("] mas foi encontrado ").append(lookahead(1));
 
-        throw new RuntimeException(mensagem);
+        throw new RuntimeException(mensagem.toString());
     }
 
     // Programa → ':' 'DEC' ListaDeclaracoes ':' 'PROG' ListaComandos;
@@ -79,9 +79,6 @@ public class GyhSintatico {
         declaracao();
         if(lookahead(1).getNome() == TipoToken.Var)
             listaDeclaracoes();
-        else {
-            // vazio
-        }
     }
 
     // Declaracao → VARIAVEL ':' TipoVar;
@@ -123,8 +120,6 @@ public class GyhSintatico {
             } else
                 erroSintatico("+ ou", "-");
             expressaoAritmeticaAux();
-        } else {
-            //vazio
         }
     }
 
@@ -150,18 +145,15 @@ public class GyhSintatico {
             } else
                 erroSintatico("* ou", "/");
             termoAritimeticoAux();
-        } else {
-            //vazio
         }
     }
 
     // FatorAritmetico → NUMINT | VARIAVEL | '(' ExpressaoAritmetica ')'
-    // IMPORTANTE: AQUI NAO ESTA FALTANDO A OPCAO DE NUMERO REAL (NA GRAMATICA DA PROFESSORA)?
     void fatorAritimetico() {
         if(lookahead(1).getNome() == TipoToken.NumInt)
             match(TipoToken.NumInt);
-        /*else if(lookahead(1).getNome() == TipoToken.NumReal)
-            match(TipoToken.NumInt);*/
+        else if(lookahead(1).getNome() == TipoToken.NumReal)
+            match(TipoToken.NumReal);
         else if(lookahead(1).getNome() == TipoToken.Var)
             match(TipoToken.Var);
         else if (lookahead(1).getNome() == TipoToken.AbrePar) {
@@ -169,7 +161,7 @@ public class GyhSintatico {
             expressaoAritmetica();
             match(TipoToken.FechaPar);
         } else
-            erroSintatico("NUMERO INTEIRO ou", /*"NUMERO REAL ou",*/ "VARIAVEL ou", "(");
+            erroSintatico("NUMERO INTEIRO ou", "NUMERO REAL ou", "VARIAVEL ou", "(");
     }
 
     // ExpressaoRelacional → ExpressaoRelacional OperadorBooleano TermoRelacional | TermoRelacional;
@@ -185,24 +177,20 @@ public class GyhSintatico {
             operadorBooleano();
             expressaoRelacional();
             expressaoRelacionalAux();
-        } else {
-            // vazio
         }
-
     }
 
     // TermoRelacional → ExpressaoAritmetica OP_REL ExpressaoAritmetica | '(' ExpressaoRelacional ')';
     // IMPORTANTE: NO VIDEO ELE REMOVE O '(' ExpressaoRelacional ')', TEM QUE REFORMULAR A EXPRESSAO PRA FUNCIONAR CERTO
-    // IMPORTANTE2: TEM QUE VERIFICAR A EXISTENCIA DO NUMERO REAL NO FATOR ARITIMETICO
     // TermoRelacionalSemParenteses → ExpressaoAritmetica OpRel ExpressaoAritmetica;
     void termoRelacionalSemParenteses() {
-        if(lookahead(1).getNome() == TipoToken.NumInt /*|| lookahead(1).getNome() == TipoToken.NumReal*/
+        if(lookahead(1).getNome() == TipoToken.NumInt || lookahead(1).getNome() == TipoToken.NumReal
                 || lookahead(1).getNome() == TipoToken.Var || lookahead(1).getNome() == TipoToken.AbrePar) {
             expressaoAritmetica();
             opRel();
             expressaoAritmetica();
         } else
-            erroSintatico("NUMERO INTEIRO ou", /*"NUMERO REAL ou",*/ "VARIAVEL ou", "(");
+            erroSintatico("NUMERO INTEIRO ou", "NUMERO REAL ou", "VARIAVEL ou", "(");
     }
     // Verifica a existencia de um operador relacional
     void opRel() {
@@ -241,8 +229,6 @@ public class GyhSintatico {
                 || lookahead(1).getNome() == TipoToken.PCImprimir || lookahead(1).getNome() == TipoToken.PCSe
                 || lookahead(1).getNome() == TipoToken.PCEnqto || lookahead(1).getNome() == TipoToken.PCIni) {
             listaComandos();
-        } else {
-            // vazio
         }
     }
 
@@ -291,18 +277,15 @@ public class GyhSintatico {
     // ComandoCondicao → 'SE' ExpressaoRelacional 'ENTAO' Comando | 'SE' ExpressaoRelacional 'ENTAO' Comando 'SENAO' Comando;
     // Refatorada:
     // ComandoCondicao → 'SE' ExpressaoRelacional 'ENTAO' Comando ('SENAO' Comando | <<vazio>>);
-    // IMPORTANTE: TEM QUE IMPLEMENTAR O SENAO NO ANALISADOR LEXICO PRA PODER USAR NO SINTATICO
     void comandoCondicao() {
         match(TipoToken.PCSe);
         expressaoRelacional();
         match(TipoToken.PCEntao);
         comando();
-        /*if(lookahead(1).getNome() == TipoToken.PcSenao) {
+        if(lookahead(1).getNome() == TipoToken.PCSenao) {
             match(TipoToken.PCSenao);
             comando();
-        } else {
-            // vazio
-        }*/
+        }
     }
 
     // ComandoRepeticao → 'ENQUANTO' ExpressaoRelacional Comando;
