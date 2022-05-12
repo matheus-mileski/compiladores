@@ -492,7 +492,9 @@ public class GyhLexico {
                     case 37:
                         if (c == '"') {
                             tokens.add(new Token(TipoToken.Cadeia, linha.substring(varIndex + 1, i)));
-                            i--;
+                            estado = 0;
+                        }else if (c == '\n'){
+                            System.out.println("Erro Lexico -> Cadeia de caracteres sem aspas no final.");
                             estado = 0;
                         }
                         break;
@@ -524,8 +526,8 @@ public class GyhLexico {
                         } else {
                             // SENA deve ser seguido de um O, ou aponta um erro lexico
                             System.out.println("Erro Lexico -> " + linha.substring(varIndex, i + 1));
+                            i--;
                         }
-                        i--;
                         estado = 0;
                         break;
 
