@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class GyhSintatico {
-    ArrayList<Token> tokens;
-    int tamanhoBuffer = 3;
-    ArrayList<Token> bufferTokens;
-    boolean terminou = false;
+    ArrayList<Token> tokens;    // Lista de tokens que é preenchida pelo analisador léxico
+    int tamanhoBuffer = 3; // Tamanho do buffer de tokens
+    ArrayList<Token> bufferTokens;  // Buffer de tokens
+    boolean terminou = false;   // Auxiliar para verificar se terminaram os tokens do lexico
 
     public GyhSintatico(ArrayList<Token> tokens) {
         // Popula a lista de tokens com os tokens retornados do analisador lexico
@@ -15,44 +15,50 @@ public class GyhSintatico {
         getToken();
     }
 
+    // Coloca o token lido no buffer de tokens
     private void getToken() {
-        // Se o buffer de tokens possuir algum token remove
+        // Se o buffer estiver cheio remove o primeiro (atualiza o buffer de tokens para receber o próximo token do analisador)
         if(bufferTokens.size() > 0)
             bufferTokens.remove(0);
 
+        // Enquanto o buffer de tokens não estiver cheio, preenche o buffer de tokens com o próximo token
         while(bufferTokens.size() < tamanhoBuffer && !terminou) {
+            // Pega o token no indice 0 da lista de tokens retornada pelo analisador lexico, coloca no buffer e
+            // remove da lista de tokens
             Token proximoToken = tokens.get(0);
             tokens.remove(0);
             bufferTokens.add(proximoToken);
 
+            // Se chegar no token EOF para de procurar tokens
             if(proximoToken.getNome() == TipoToken.EOF)
                 terminou = true;
         }
 
+        // Mostra o último token lido
         System.out.println("Token lido: " + lookahead(1));
     }
 
+    // Lookahead -> Olha para o próximo token lido
     Token lookahead(int i) {
-        // Retorna nulo se o buffer de tokens estiver vazio
-        if(bufferTokens.isEmpty())
-            return null;
-        // Retorna o ultimo elemento do buffer de tokens se o valor do lookahead for maior que o ultimo indice do buffer de tokens
-        if(i-1 > bufferTokens.size())
-            return bufferTokens.get(bufferTokens.size() - 1);
-
         // Retorna o enesimo elemento do buffer de tokens
         return bufferTokens.get(i - 1);
     }
 
+    // Funçao match -> Se o token lido possuir o mesmo nome que o fornecido para a funcao da o match, senao
+    // mostra um erro léxico
     void match(TipoToken tipo) {
-        // Se o proximo token a ser lido possuir o mesmo nome que o fornecido para a funcao da o match
+        // Se o token lido for igual ao token fornecido da match
         if(lookahead(1).getNome() == tipo) {
             System.out.println("Match: " + lookahead(1));
+            // Atualiza o buffer de tokens e pega o próximo token do léxico
             getToken();
         } else
+            // Mostra um erro léxico caso não de match
             erroSintatico(tipo.toString());
     }
 
+    // Exibir erro sintático na tela -> Para a execução do analisador
+    // Recebe quais eram os tokens esperados como parametro
     void erroSintatico(String... tokens) {
         StringBuilder mensagem = new StringBuilder("Erro sintatico -> Esperado [ ");
         for (int i = 0; i < tokens.length; i++)
@@ -102,7 +108,7 @@ public class GyhSintatico {
     // ExpressaoAritmetica → ExpressaoAritmetica '+' TermoAritmetico | ExpressaoAritmetica '-' TermoAritmetico | TermoAritmetico;
     // Refatorada:
     // ExpressaoAritmetica → ExpressaoAritmetica ('+' TermoAritmetico | '-' TermoAritmetico) | TermoAritmetico;
-    // Sem recursão a esquerda:
+    // Sem recursão a esquerda (A → A b | c fica A → c A_aux; A_aux → b A_aux | <<vazio>>):
     // ExpressaoAritmetica → TermoAritmetico ExpressaoAritmeticaAux
     void expressaoAritmetica() {
         termoAritimetico();
@@ -127,7 +133,7 @@ public class GyhSintatico {
     // TermoAritmetico → TermoAritmetico '*' FatorAritmetico | TermoAritmetico '/' FatorAritmetico | FatorAritmetico;
     // Refatorada:
     // TermoAritmetico → TermoAritmetico ('*' FatorAritmetico | '/' FatorAritmetico) | FatorAritmetico;
-    // Sem recursão a esquerda:
+    // Sem recursão a esquerda (A → A b | c fica A → c A_aux; A_aux → b A_aux | <<vazio>>):
     // TermoAritmetico → FatorAritmetico TermoAritmeticoAux
     void termoAritimetico() {
         fatorAritimetico();
@@ -148,7 +154,7 @@ public class GyhSintatico {
         }
     }
 
-    // FatorAritmetico → NUMINT | VARIAVEL | '(' ExpressaoAritmetica ')'
+    // FatorAritmetico → NUMINT | NUMREAL | VARIAVEL | '(' ExpressaoAritmetica ')'
     void fatorAritimetico() {
         if(lookahead(1).getNome() == TipoToken.NumInt)
             match(TipoToken.NumInt);
@@ -165,10 +171,10 @@ public class GyhSintatico {
     }
 
     // ExpressaoRelacional → ExpressaoRelacional OperadorBooleano TermoRelacional | TermoRelacional;
-    // Sem recursão a esquerda:
+    // Sem recursão a esquerda (A → A b | c fica A → c A_aux; A_aux → b A_aux | <<vazio>>):
     // ExpressaoRelacional → TermoRelacional ExpressaoRelacionalAux;
     void expressaoRelacional() {
-        termoRelacionalSemParenteses();
+        termoRelacional();
         expressaoRelacionalAux();
     }
     // ExpressaoRelacionalAux → OperadorBooleano TermoRelacional ExpressaoRelacionalAux | << vazio >>;
@@ -181,15 +187,18 @@ public class GyhSintatico {
     }
 
     // TermoRelacional → ExpressaoAritmetica OP_REL ExpressaoAritmetica | '(' ExpressaoRelacional ')';
-    // IMPORTANTE: NO VIDEO ELE REMOVE O '(' ExpressaoRelacional ')', TEM QUE REFORMULAR A EXPRESSAO PRA FUNCIONAR CERTO
-    // TermoRelacionalSemParenteses → ExpressaoAritmetica OpRel ExpressaoAritmetica;
-    void termoRelacionalSemParenteses() {
+    void termoRelacional() {
         if(lookahead(1).getNome() == TipoToken.NumInt || lookahead(1).getNome() == TipoToken.NumReal
-                || lookahead(1).getNome() == TipoToken.Var || lookahead(1).getNome() == TipoToken.AbrePar) {
+                || lookahead(1).getNome() == TipoToken.Var) {
             expressaoAritmetica();
             opRel();
             expressaoAritmetica();
-        } else
+        } else if (lookahead(1).getNome() == TipoToken.AbrePar) {
+            match(TipoToken.AbrePar);
+            expressaoRelacional();
+            match(TipoToken.FechaPar);
+        }
+        else
             erroSintatico("NUMERO INTEIRO ou", "NUMERO REAL ou", "VARIAVEL ou", "(");
     }
     // Verifica a existencia de um operador relacional
