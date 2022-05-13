@@ -1,7 +1,7 @@
 // Julio Ribeiro e Matheus Mileski
 // Vídeos:
 // - Analisador Léxico: https://www.youtube.com/watch?v=e4KjLvzrIB4
-// - Analisador Sintático:
+// - Analisador Sintático: https://youtu.be/-JOJBlEuDyM
 
 // TODO: Verificar erro do IMPRIMIR - Caso seja uma cadeia sem as aspas no final, a cadeira será ignorada - OK
 // TODO: Adicionar SENAO ao Analisador Lexico - OK
