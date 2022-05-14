@@ -1,4 +1,4 @@
-#Erro sintático: 'Inesperado Token: FechaPar' ou 'Inesperado Lexema: )' 
+#Erro sintático: 'Inesperado Token: PCReal' ou 'Inesperado Lexema: REAL' ou 'Esperado Token Var' 
 
 :DEC
 num1:INT
@@ -8,12 +8,12 @@ aux:INT
 
 :PROG
 # Coloca 3 números em ordem crescente
-LER num1
+LER REAL
 LER num2
 LER num3
 SE num1 > num2 ENTAO
    INI
-      aux := 2+3-4+5)-6*5-1
+      aux := 2+3-4+5-6*5-1
       num2 := num1
       num1 := aux
    FIM 
