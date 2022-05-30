@@ -1,0 +1,11 @@
+T__0=1
+PC=2
+OpRel=3
+Var=4
+NumInt=5
+NumReal=6
+Delim=7
+WS=8
+Comment=9
+'Prox_Aula_Falamos_Mais'=1
+':'=7
