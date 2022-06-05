@@ -1,16 +1,20 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GyhSintatico {
     ArrayList<Token> tokens;    // Lista de tokens que é preenchida pelo analisador léxico
     int tamanhoBuffer = 3; // Tamanho do buffer de tokens
     ArrayList<Token> bufferTokens;  // Buffer de tokens
     boolean terminou = false;   // Auxiliar para verificar se terminaram os tokens do lexico
+    HashMap<String, Variavel> variaveis;
 
     public GyhSintatico(ArrayList<Token> tokens) {
         // Popula a lista de tokens com os tokens retornados do analisador lexico
-        this.tokens = tokens;
+        this.tokens = new ArrayList<>(tokens);
         // Cria um buffer de tokens
         bufferTokens = new ArrayList<>();
+        // Cria HashMap pra armazenar as variaveis
+        this.variaveis = new HashMap<String, Variavel>();
         // Vai para a funcao que popula o buffer de tokens
         getToken();
     }
@@ -18,11 +22,11 @@ public class GyhSintatico {
     // Coloca o token lido no buffer de tokens
     private void getToken() {
         // Se o buffer estiver cheio remove o primeiro (atualiza o buffer de tokens para receber o próximo token do analisador)
-        if(bufferTokens.size() > 0)
+        if (bufferTokens.size() > 0)
             bufferTokens.remove(0);
 
         // Enquanto o buffer de tokens não estiver cheio, preenche o buffer de tokens com o próximo token
-        while(bufferTokens.size() < tamanhoBuffer && !terminou) {
+        while (bufferTokens.size() < tamanhoBuffer && !terminou) {
             // Pega o token no indice 0 da lista de tokens retornada pelo analisador lexico, coloca no buffer e
             // remove da lista de tokens
             Token proximoToken = tokens.get(0);
@@ -30,7 +34,7 @@ public class GyhSintatico {
             bufferTokens.add(proximoToken);
 
             // Se chegar no token EOF para de procurar tokens
-            if(proximoToken.getNome() == TipoToken.EOF)
+            if (proximoToken.getNome() == TipoToken.EOF)
                 terminou = true;
         }
 
@@ -48,7 +52,7 @@ public class GyhSintatico {
     // mostra um erro léxico
     void match(TipoToken tipo) {
         // Se o token lido for igual ao token fornecido da match
-        if(lookahead(1).getNome() == tipo) {
+        if (lookahead(1).getNome() == tipo) {
             System.out.println("Match: " + lookahead(1));
             // Atualiza o buffer de tokens e pega o próximo token do léxico
             getToken();
@@ -83,25 +87,34 @@ public class GyhSintatico {
     // ListaDeclaracoes → Declaracao (ListaDeclaracoes | <<vazio>>);
     void listaDeclaracoes() {
         declaracao();
-        if(lookahead(1).getNome() == TipoToken.Var)
+        if (lookahead(1).getNome() == TipoToken.Var)
             listaDeclaracoes();
     }
 
     // Declaracao → VARIAVEL ':' TipoVar;
     void declaracao() {
+        //salva o token antes da verificacao sintatica
+        Token aux = new Token(lookahead(1).getNome(), lookahead(1).getLexema());
         match(TipoToken.Var);
         match(TipoToken.Delim);
-        tipoVar();
+        //salva o tipo da variavel antes da verificacao sintatiac
+        int tipo = tipoVar();
+        //apos a verificacao sintatica, salva o token como variavel no hashmap
+        this.variaveis.put(aux.getLexema(), new Variavel(aux.getLexema(), tipo));
     }
 
     // TipoVar → 'INT' | 'REAL';
-    void tipoVar() {
-        if(lookahead(1).getNome() == TipoToken.PCInt)
+    int tipoVar() {
+        if (lookahead(1).getNome() == TipoToken.PCInt) {
             match(TipoToken.PCInt);
-        else if(lookahead(1).getNome() == TipoToken.PCReal)
+            return Variavel.INT;
+        } else if (lookahead(1).getNome() == TipoToken.PCReal) {
             match(TipoToken.PCReal);
-        else
-            erroSintatico("INT ou", "REAL");
+            return Variavel.REAL;
+        }
+
+        erroSintatico("INT ou", "REAL");
+        return -1;
     }
 
     // Original:
@@ -114,13 +127,14 @@ public class GyhSintatico {
         termoAritimetico();
         expressaoAritmeticaAux();
     }
+
     // ExpressaoAritmeticaAux → ('+' TermoAritmetico | '-' TermoAritmetico) ExpressaoAritmeticaAux | << vazio >>
     void expressaoAritmeticaAux() {
-        if(lookahead(1).getNome() == TipoToken.OpAritSoma || lookahead(1).getNome() == TipoToken.OpAritSub) {
-            if(lookahead(1).getNome() == TipoToken.OpAritSoma) {
+        if (lookahead(1).getNome() == TipoToken.OpAritSoma || lookahead(1).getNome() == TipoToken.OpAritSub) {
+            if (lookahead(1).getNome() == TipoToken.OpAritSoma) {
                 match(TipoToken.OpAritSoma);
                 termoAritimetico();
-            } else if(lookahead(1).getNome() == TipoToken.OpAritSub) {
+            } else if (lookahead(1).getNome() == TipoToken.OpAritSub) {
                 match(TipoToken.OpAritSub);
                 termoAritimetico();
             } else
@@ -139,13 +153,14 @@ public class GyhSintatico {
         fatorAritimetico();
         termoAritimeticoAux();
     }
+
     // TermoAritmeticoAux → ('*' FatorAritmetico | '/' FatorAritmetico) TermoAritmeticoAux | << vazio >>
     void termoAritimeticoAux() {
-        if(lookahead(1).getNome() == TipoToken.OpAritMult || lookahead(1).getNome() == TipoToken.OpAritDiv) {
-            if(lookahead(1).getNome() == TipoToken.OpAritMult) {
+        if (lookahead(1).getNome() == TipoToken.OpAritMult || lookahead(1).getNome() == TipoToken.OpAritDiv) {
+            if (lookahead(1).getNome() == TipoToken.OpAritMult) {
                 match(TipoToken.OpAritMult);
                 fatorAritimetico();
-            } else if(lookahead(1).getNome() == TipoToken.OpAritDiv) {
+            } else if (lookahead(1).getNome() == TipoToken.OpAritDiv) {
                 match(TipoToken.OpAritDiv);
                 fatorAritimetico();
             } else
@@ -156,11 +171,11 @@ public class GyhSintatico {
 
     // FatorAritmetico → NUMINT | NUMREAL | VARIAVEL | '(' ExpressaoAritmetica ')'
     void fatorAritimetico() {
-        if(lookahead(1).getNome() == TipoToken.NumInt)
+        if (lookahead(1).getNome() == TipoToken.NumInt)
             match(TipoToken.NumInt);
-        else if(lookahead(1).getNome() == TipoToken.NumReal)
+        else if (lookahead(1).getNome() == TipoToken.NumReal)
             match(TipoToken.NumReal);
-        else if(lookahead(1).getNome() == TipoToken.Var)
+        else if (lookahead(1).getNome() == TipoToken.Var)
             match(TipoToken.Var);
         else if (lookahead(1).getNome() == TipoToken.AbrePar) {
             match(TipoToken.AbrePar);
@@ -177,9 +192,10 @@ public class GyhSintatico {
         termoRelacional();
         expressaoRelacionalAux();
     }
+
     // ExpressaoRelacionalAux → OperadorBooleano TermoRelacional ExpressaoRelacionalAux | << vazio >>;
     void expressaoRelacionalAux() {
-        if(lookahead(1).getNome() == TipoToken.OpBoolE || lookahead(1).getNome() == TipoToken.OpBoolOu) {
+        if (lookahead(1).getNome() == TipoToken.OpBoolE || lookahead(1).getNome() == TipoToken.OpBoolOu) {
             operadorBooleano();
             expressaoRelacional();
             expressaoRelacionalAux();
@@ -188,7 +204,7 @@ public class GyhSintatico {
 
     // TermoRelacional → ExpressaoAritmetica OP_REL ExpressaoAritmetica | '(' ExpressaoRelacional ')';
     void termoRelacional() {
-        if(lookahead(1).getNome() == TipoToken.NumInt || lookahead(1).getNome() == TipoToken.NumReal
+        if (lookahead(1).getNome() == TipoToken.NumInt || lookahead(1).getNome() == TipoToken.NumReal
                 || lookahead(1).getNome() == TipoToken.Var) {
             expressaoAritmetica();
             opRel();
@@ -197,23 +213,23 @@ public class GyhSintatico {
             match(TipoToken.AbrePar);
             expressaoRelacional();
             match(TipoToken.FechaPar);
-        }
-        else
+        } else
             erroSintatico("NUMERO INTEIRO ou", "NUMERO REAL ou", "VARIAVEL ou", "(");
     }
+
     // Verifica a existencia de um operador relacional
     void opRel() {
-        if(lookahead(1).getNome() == TipoToken.OpRelMenor)
+        if (lookahead(1).getNome() == TipoToken.OpRelMenor)
             match(TipoToken.OpRelMenor);
-        else if(lookahead(1).getNome() == TipoToken.OpRelMenorIgual)
+        else if (lookahead(1).getNome() == TipoToken.OpRelMenorIgual)
             match(TipoToken.OpRelMenorIgual);
-        else if(lookahead(1).getNome() == TipoToken.OpRelMaior)
+        else if (lookahead(1).getNome() == TipoToken.OpRelMaior)
             match(TipoToken.OpRelMaior);
-        else if(lookahead(1).getNome() == TipoToken.OpRelMaiorIgual)
+        else if (lookahead(1).getNome() == TipoToken.OpRelMaiorIgual)
             match(TipoToken.OpRelMaiorIgual);
-        else if(lookahead(1).getNome() == TipoToken.OpRelIgual)
+        else if (lookahead(1).getNome() == TipoToken.OpRelIgual)
             match(TipoToken.OpRelIgual);
-        else if(lookahead(1).getNome() == TipoToken.OpRelDif)
+        else if (lookahead(1).getNome() == TipoToken.OpRelDif)
             match(TipoToken.OpRelDif);
         else
             erroSintatico("< ou", "<= ou", "> ou", ">= ou", "== ou", "!= ou");
@@ -221,9 +237,9 @@ public class GyhSintatico {
 
     // OperadorBooleano → 'E' | 'OU';
     void operadorBooleano() {
-        if(lookahead(1).getNome() == TipoToken.OpBoolE)
+        if (lookahead(1).getNome() == TipoToken.OpBoolE)
             match(TipoToken.OpBoolE);
-        else if(lookahead(1).getNome() == TipoToken.OpBoolOu)
+        else if (lookahead(1).getNome() == TipoToken.OpBoolOu)
             match(TipoToken.OpBoolOu);
         else
             erroSintatico("E ou", "OU");
@@ -234,7 +250,7 @@ public class GyhSintatico {
     // ListaComandos → Comando (ListaComandos | <<vazio>>);
     void listaComandos() {
         comando();
-        if(lookahead(1).getNome() == TipoToken.Var || lookahead(1).getNome() == TipoToken.PCLer
+        if (lookahead(1).getNome() == TipoToken.Var || lookahead(1).getNome() == TipoToken.PCLer
                 || lookahead(1).getNome() == TipoToken.PCImprimir || lookahead(1).getNome() == TipoToken.PCSe
                 || lookahead(1).getNome() == TipoToken.PCEnqto || lookahead(1).getNome() == TipoToken.PCIni) {
             listaComandos();
@@ -243,17 +259,17 @@ public class GyhSintatico {
 
     // Comando → ComandoAtribuicao | ComandoEntrada | ComandoSaida | ComandoCondicao | ComandoRepeticao | SubAlgoritmo;
     void comando() {
-        if(lookahead(1).getNome() == TipoToken.Var)
+        if (lookahead(1).getNome() == TipoToken.Var)
             comandoAtribuicao();
-        else if(lookahead(1).getNome() == TipoToken.PCLer)
+        else if (lookahead(1).getNome() == TipoToken.PCLer)
             comandoEntrada();
-        else if(lookahead(1).getNome() == TipoToken.PCImprimir)
+        else if (lookahead(1).getNome() == TipoToken.PCImprimir)
             comandoSaida();
-        else if(lookahead(1).getNome() == TipoToken.PCSe)
+        else if (lookahead(1).getNome() == TipoToken.PCSe)
             comandoCondicao();
-        else if(lookahead(1).getNome() == TipoToken.PCEnqto)
+        else if (lookahead(1).getNome() == TipoToken.PCEnqto)
             comandoRepeticao();
-        else if(lookahead(1).getNome() == TipoToken.PCIni)
+        else if (lookahead(1).getNome() == TipoToken.PCIni)
             subAlgoritmo();
         else
             erroSintatico("VARIAVEL ou", "LER ou", "IMPRIMIR ou", "SE ou", "ENQTO ou", "INI");
@@ -275,9 +291,9 @@ public class GyhSintatico {
     // ComandoSaida → 'IMPRIMIR'  (VARIAVEL | CADEIA);
     void comandoSaida() {
         match(TipoToken.PCImprimir);
-        if(lookahead(1).getNome() == TipoToken.Var)
+        if (lookahead(1).getNome() == TipoToken.Var)
             match(TipoToken.Var);
-        else if(lookahead(1).getNome() == TipoToken.Cadeia)
+        else if (lookahead(1).getNome() == TipoToken.Cadeia)
             match(TipoToken.Cadeia);
         else
             erroSintatico("VARIAVEL ou", "CADEIA DE CARACTERES");
@@ -291,7 +307,7 @@ public class GyhSintatico {
         expressaoRelacional();
         match(TipoToken.PCEntao);
         comando();
-        if(lookahead(1).getNome() == TipoToken.PCSenao) {
+        if (lookahead(1).getNome() == TipoToken.PCSenao) {
             match(TipoToken.PCSenao);
             comando();
         }
