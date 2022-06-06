@@ -1,0 +1,20 @@
+#Erro semantico: Overflow
+
+:DEC
+parametro:INT
+fatorial:INT
+valorreal:REAL
+:PROG
+# Calcula o fatorial de um número inteiro
+LER parametro
+fatorial := parametro
+SE parametro == 1 ENTAO fatorial := -1
+ENQTO parametro > -1
+ INI
+  fatorial := fatorial * (-1+parametro - 1)
+  parametro := parametro - 1
+ FIM
+
+valorreal:=1.256565426456456
+IMPRIMIR fatorial
+IMPRIMIR "Oi"

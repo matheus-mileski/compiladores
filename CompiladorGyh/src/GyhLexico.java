@@ -84,7 +84,18 @@ public class GyhLexico {
                         } else if (c == '+') {
                             tokens.add(new Token(TipoToken.OpAritSoma, "+"));
                         } else if (c == '-') {
-                            tokens.add(new Token(TipoToken.OpAritSub, "-"));
+                            if (tokens.get(tokens.size() - 1).getNome() == TipoToken.Atrib ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.OpRelMenor ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.OpRelMaior ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.OpRelMenorIgual ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.OpRelMaiorIgual ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.OpRelIgual ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.OpRelDif ||
+                                    tokens.get(tokens.size() - 1).getNome() == TipoToken.AbrePar
+                            ){
+                                estado = 35;
+                            }else
+                                tokens.add(new Token(TipoToken.OpAritSub, "-"));
                         } else if (c == '(') {
                             tokens.add(new Token(TipoToken.AbrePar, "("));
                         } else if (c == ')') {

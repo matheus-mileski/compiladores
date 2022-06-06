@@ -9,6 +9,8 @@ public class Token {
         return lexema;
     }
 
+    public void setLexema(String lex) { this.lexema = lex;}
+
     // Construtor para gerar um token apenas com nome (EOF)
     public Token(TipoToken nome) {
         this.nome = nome;
