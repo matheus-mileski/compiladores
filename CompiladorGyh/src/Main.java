@@ -2,6 +2,7 @@
 // Vídeos:
 // - Analisador Léxico: https://www.youtube.com/watch?v=e4KjLvzrIB4
 // - Analisador Sintático: https://youtu.be/-JOJBlEuDyM
+// - Analisador Semântico: https://youtu.be/CDxI334Gr1A
 
 import java.util.ArrayList;
 
