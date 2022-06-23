@@ -24,6 +24,7 @@ public class Main {
         GyhSintatico sint = new GyhSintatico(tokens);
         sint.programa();
         System.out.println("------------------------------------------");
+        System.out.println();
 
         System.out.println("---------- Analisador Semântico ----------");
         GyhSemantico sem = new GyhSemantico(sint.variaveis, tokens);
