@@ -1,4 +1,4 @@
-// Generated from C:/Users/Julio Ribeiro/Desktop/compiladores/CompiladorGyhAntlr/src\Gyh.g4 by ANTLR 4.10.1
+// Generated from /Users/ribeiro/Desktop/compiladores/CompiladorGyhAntlr/src/Gyh.g4 by ANTLR 4.10.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -88,6 +88,13 @@ public class GyhLexer extends Lexer {
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
+
+
+	    private String _varName;
+	    private int _varType;
+	    private String _varValue;
+	    private Symbol _varSymbol;
+	    private SymbolTable _symbolTable = new SymbolTable();
 
 
 	public GyhLexer(CharStream input) {

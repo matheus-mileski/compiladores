@@ -1,8 +1,31 @@
 grammar Gyh;
 
+@members {
+    private String _varName;
+    private int _varType;
+    private String _varValue;
+    private Symbol _varSymbol;
+    private SymbolTable _symbolTable = new SymbolTable();
+}
+
 programa: Delim 'DEC' listaDeclaracoes Delim 'PROG' listaComandos EOF;
 listaDeclaracoes: declaracao listaDeclaracoes | declaracao;
-declaracao: Var Delim tipoVar;
+declaracao: Var Delim tipoVar
+{
+    _varName = _input.LT(-3).getText();
+    if (_input.LT(-1).getText() == "INT")
+        _varType = 0;
+    else
+        _varType = 1;
+    _varValue = null;
+    _varSymbol = new Symbol(_varName, _varType, _varValue);
+
+    if(!_symbolTable.contains(_varSymbol.getName())) {
+        _symbolTable.addSymbol(_varSymbol);
+        System.out.println("adicionado: " + _varSymbol.toString());
+    } else
+        System.out.println("Erro semantico: " + _varSymbol.toString() + " já existe!");
+};
 tipoVar: 'INT' | 'REAL';
 expressaoAritmetica: expressaoAritmetica '+' termoAritmetico | expressaoAritmetica '-' termoAritmetico | termoAritmetico;
 termoAritmetico: termoAritmetico '*' fatorAritmetico | termoAritmetico '/' fatorAritmetico | fatorAritmetico;

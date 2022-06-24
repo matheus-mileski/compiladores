@@ -1,4 +1,4 @@
-// Generated from C:/Users/Julio Ribeiro/Desktop/compiladores/CompiladorGyhAntlr/src\Gyh.g4 by ANTLR 4.10.1
+// Generated from /Users/ribeiro/Desktop/compiladores/CompiladorGyhAntlr/src/Gyh.g4 by ANTLR 4.10.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
