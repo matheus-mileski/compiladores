@@ -4,7 +4,6 @@ public class Variavel {
 
     String nome;
     int tipo;
-    String valor;
     boolean utilizada;
 
     public static final int INT = 0;

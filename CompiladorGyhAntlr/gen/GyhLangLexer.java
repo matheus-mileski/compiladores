@@ -1,4 +1,7 @@
-// Generated from /Users/ribeiro/Desktop/compiladores/CompiladorGyhAntlr/src/Gyh.g4 by ANTLR 4.10.1
+// Generated from D:/mathe/Documents/GITHUB/Compiladores/CompiladorGyhAntlr/src\GyhLang.g4 by ANTLR 4.10.1
+
+    import java.util.ArrayList;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -9,7 +12,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class GyhLexer extends Lexer {
+public class GyhLangLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.10.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -91,19 +94,46 @@ public class GyhLexer extends Lexer {
 
 
 	    private String _varName;
-	    private int _varType;
+	    private String _varType;
 	    private String _varValue;
 	    private Symbol _varSymbol;
 	    private SymbolTable _symbolTable = new SymbolTable();
 
+	    private String _var;
 
-	public GyhLexer(CharStream input) {
+	    private String _varAtrib = "";
+	    private String _varExp = "";
+	    private String _condition = "";
+
+	    private ArrayList<Command> listCmd = new ArrayList<Command>();
+	    private ArrayList<Command> listCmdAux = new ArrayList<Command>();
+
+	    private ArrayList<Command> listTrue = new ArrayList<Command>();
+	    private ArrayList<Command> listFalse = new ArrayList<Command>();
+
+	    private GyhProgram program = new GyhProgram();
+
+	    public void generateCommand(String filename){
+	        program.generateTarget(filename);
+	    }
+
+	    public void verificarVar(String nomeVar){
+	        if(!_symbolTable.contains(nomeVar)){
+	            throw new RuntimeException("Erro semantico: variavel \"" + nomeVar + "\" não declarada");
+	        }
+	        if (!_symbolTable.getSymbol(nomeVar).foiUtilizada()) {
+	            _symbolTable.getSymbol(nomeVar).setUtilizada();
+	        }
+	    }
+
+
+	public GyhLangLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Gyh.g4"; }
+	public String getGrammarFileName() { return "GyhLang.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

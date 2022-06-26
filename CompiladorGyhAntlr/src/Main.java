@@ -1,21 +1,31 @@
 import java.io.IOException;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.*;
 
 public class Main {
     public static void main(String[] args) {
+        String filename = "programa1.gyh";
         try {
-            CharStream charStream = CharStreams.fromFileName("programa1.gyh");
+            CharStream charStream = CharStreams.fromFileName(filename);
 
-            GyhLexer lexer = new GyhLexer(charStream);
-            Token token;
+            GyhLangLexer lexer = new GyhLangLexer(charStream);
+
+            // Remove o Error Listener padrão do Lexer e adiciona ThrowingErrorListener
+            lexer.removeErrorListeners();
+            lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+
             CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-            GyhParser parser = new GyhParser(tokens);
+            GyhLangParser parser = new GyhLangParser(tokens);
+
+            // Remove o Error Listener padrão do Parser e adiciona ThrowingErrorListener
+            parser.removeErrorListeners();
+            parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+
             parser.programa();
+
+            parser.generateCommand(filename.substring(0,filename.length()-4));
+
         } catch (IOException exception) {
             exception.printStackTrace();
         }

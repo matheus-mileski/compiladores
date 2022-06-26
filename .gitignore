@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
-
+*.rar
+*.zip
+*.jar
+*.c
 # Object files
 *.o
 *.ko

@@ -1,12 +1,18 @@
 public class Symbol {
     private String name;
     private int type;   // INT = 0, REAL = 1
-    private String value;
 
-    public Symbol(String name, int type, String value) {
+    private boolean utilizada;
+
+    public static final int INT = 0;
+    public static final int REAL = 1;
+
+    public Symbol(String name, String type) {
         this.name = name;
-        this.type = type;
-        this.value = value;
+        if (type.equals("INT"))
+            this.type = INT;
+        else
+            this.type = REAL;
     }
 
     public String getName() {
@@ -21,23 +27,41 @@ public class Symbol {
         return type;
     }
 
+    public String getTypeStr() {
+        if (type == 0)
+            return "INT";
+        return "REAL";
+    }
+
     public void setType(int type) {
         this.type = type;
     }
 
-    public String getValue() {
-        return value;
+    public void setUtilizada() {
+        this.utilizada = true;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public boolean foiUtilizada() {
+        return utilizada;
     }
 
     @Override
     public String toString() {
-        if (type == 0)
-            return ("Simbolo: (nome: " + name + ", tipo: INT, valor: " + value + ")");
-        else
-            return ("Simbolo: (nome: " + name + ", tipo: REAL, valor: " + value + ")");
+        if (this.type == 0) {
+            return ("Simbolo: (nome: " + name + ", tipo: INT)");
+        } else {
+            return ("Simbolo: (nome: " + name + ", tipo: REAL)");
+        }
+
+    }
+
+    public String generateCode() {
+        String str;
+
+        if (type == INT) {
+            return "\tint " + name + ";\n";
+        }
+
+        return "\tdouble " + name + ";\n";
     }
 }

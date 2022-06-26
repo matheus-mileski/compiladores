@@ -1,231 +1,234 @@
-// Generated from /Users/ribeiro/Desktop/compiladores/CompiladorGyhAntlr/src/Gyh.g4 by ANTLR 4.10.1
+// Generated from D:/mathe/Documents/GITHUB/Compiladores/CompiladorGyhAntlr/src\GyhLang.g4 by ANTLR 4.10.1
+
+    import java.util.ArrayList;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link GyhListener},
+ * This class provides an empty implementation of {@link GyhLangListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class GyhBaseListener implements GyhListener {
+public class GyhLangBaseListener implements GyhLangListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrograma(GyhParser.ProgramaContext ctx) { }
+	@Override public void enterPrograma(GyhLangParser.ProgramaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrograma(GyhParser.ProgramaContext ctx) { }
+	@Override public void exitPrograma(GyhLangParser.ProgramaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterListaDeclaracoes(GyhParser.ListaDeclaracoesContext ctx) { }
+	@Override public void enterListaDeclaracoes(GyhLangParser.ListaDeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitListaDeclaracoes(GyhParser.ListaDeclaracoesContext ctx) { }
+	@Override public void exitListaDeclaracoes(GyhLangParser.ListaDeclaracoesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracao(GyhParser.DeclaracaoContext ctx) { }
+	@Override public void enterDeclaracao(GyhLangParser.DeclaracaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracao(GyhParser.DeclaracaoContext ctx) { }
+	@Override public void exitDeclaracao(GyhLangParser.DeclaracaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipoVar(GyhParser.TipoVarContext ctx) { }
+	@Override public void enterTipoVar(GyhLangParser.TipoVarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipoVar(GyhParser.TipoVarContext ctx) { }
+	@Override public void exitTipoVar(GyhLangParser.TipoVarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressaoAritmetica(GyhParser.ExpressaoAritmeticaContext ctx) { }
+	@Override public void enterExpressaoAritmetica(GyhLangParser.ExpressaoAritmeticaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressaoAritmetica(GyhParser.ExpressaoAritmeticaContext ctx) { }
+	@Override public void exitExpressaoAritmetica(GyhLangParser.ExpressaoAritmeticaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTermoAritmetico(GyhParser.TermoAritmeticoContext ctx) { }
+	@Override public void enterTermoAritmetico(GyhLangParser.TermoAritmeticoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTermoAritmetico(GyhParser.TermoAritmeticoContext ctx) { }
+	@Override public void exitTermoAritmetico(GyhLangParser.TermoAritmeticoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFatorAritmetico(GyhParser.FatorAritmeticoContext ctx) { }
+	@Override public void enterFatorAritmetico(GyhLangParser.FatorAritmeticoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFatorAritmetico(GyhParser.FatorAritmeticoContext ctx) { }
+	@Override public void exitFatorAritmetico(GyhLangParser.FatorAritmeticoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressaoRelacional(GyhParser.ExpressaoRelacionalContext ctx) { }
+	@Override public void enterOperadorBooleano(GyhLangParser.OperadorBooleanoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressaoRelacional(GyhParser.ExpressaoRelacionalContext ctx) { }
+	@Override public void exitOperadorBooleano(GyhLangParser.OperadorBooleanoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTermoRelacional(GyhParser.TermoRelacionalContext ctx) { }
+	@Override public void enterListaComandos(GyhLangParser.ListaComandosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTermoRelacional(GyhParser.TermoRelacionalContext ctx) { }
+	@Override public void exitListaComandos(GyhLangParser.ListaComandosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperadorBooleano(GyhParser.OperadorBooleanoContext ctx) { }
+	@Override public void enterComando(GyhLangParser.ComandoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperadorBooleano(GyhParser.OperadorBooleanoContext ctx) { }
+	@Override public void exitComando(GyhLangParser.ComandoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterListaComandos(GyhParser.ListaComandosContext ctx) { }
+	@Override public void enterComandoAtribuicao(GyhLangParser.ComandoAtribuicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitListaComandos(GyhParser.ListaComandosContext ctx) { }
+	@Override public void exitComandoAtribuicao(GyhLangParser.ComandoAtribuicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComando(GyhParser.ComandoContext ctx) { }
+	@Override public void enterComandoEntrada(GyhLangParser.ComandoEntradaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComando(GyhParser.ComandoContext ctx) { }
+	@Override public void exitComandoEntrada(GyhLangParser.ComandoEntradaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComandoAtribuicao(GyhParser.ComandoAtribuicaoContext ctx) { }
+	@Override public void enterComandoSaida(GyhLangParser.ComandoSaidaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComandoAtribuicao(GyhParser.ComandoAtribuicaoContext ctx) { }
+	@Override public void exitComandoSaida(GyhLangParser.ComandoSaidaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComandoEntrada(GyhParser.ComandoEntradaContext ctx) { }
+	@Override public void enterExpressaoRelacional(GyhLangParser.ExpressaoRelacionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComandoEntrada(GyhParser.ComandoEntradaContext ctx) { }
+	@Override public void exitExpressaoRelacional(GyhLangParser.ExpressaoRelacionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComandoSaida(GyhParser.ComandoSaidaContext ctx) { }
+	@Override public void enterTermoRelacional(GyhLangParser.TermoRelacionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComandoSaida(GyhParser.ComandoSaidaContext ctx) { }
+	@Override public void exitTermoRelacional(GyhLangParser.TermoRelacionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComandoCondicao(GyhParser.ComandoCondicaoContext ctx) { }
+	@Override public void enterComandoCondicao(GyhLangParser.ComandoCondicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComandoCondicao(GyhParser.ComandoCondicaoContext ctx) { }
+	@Override public void exitComandoCondicao(GyhLangParser.ComandoCondicaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComandoRepeticao(GyhParser.ComandoRepeticaoContext ctx) { }
+	@Override public void enterComandoRepeticao(GyhLangParser.ComandoRepeticaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComandoRepeticao(GyhParser.ComandoRepeticaoContext ctx) { }
+	@Override public void exitComandoRepeticao(GyhLangParser.ComandoRepeticaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSubAlgoritmo(GyhParser.SubAlgoritmoContext ctx) { }
+	@Override public void enterSubAlgoritmo(GyhLangParser.SubAlgoritmoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSubAlgoritmo(GyhParser.SubAlgoritmoContext ctx) { }
+	@Override public void exitSubAlgoritmo(GyhLangParser.SubAlgoritmoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,6 +1,9 @@
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class SymbolTable {
+
+
     private Hashtable<String, Symbol> symbolTable;
 
     public SymbolTable() {
@@ -17,5 +20,13 @@ public class SymbolTable {
 
     public boolean contains(String name) {
         return getSymbol(name) != null;
+    }
+
+    public ArrayList<Symbol> getAll() {
+        return new ArrayList<Symbol>(symbolTable.values());
+    }
+
+    public Hashtable<String, Symbol> getSymbolTable() {
+        return symbolTable;
     }
 }
