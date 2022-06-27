@@ -1,4 +1,4 @@
-// Generated from D:/mathe/Documents/GITHUB/Compiladores/CompiladorGyhAntlr/src\GyhLang.g4 by ANTLR 4.10.1
+// Generated from C:/Users/julio/Desktop/compiladores/CompiladorGyhAntlr/src\GyhLang.g4 by ANTLR 4.10.1
 
     import java.util.ArrayList;
 

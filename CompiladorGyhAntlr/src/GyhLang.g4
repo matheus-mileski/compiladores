@@ -1,34 +1,38 @@
 grammar GyhLang;
 
+// imports
 @header {
     import java.util.ArrayList;
 }
 
+// Declarações
 @members {
-    private String _varName;
-    private String _varType;
-    private String _varValue;
-    private Symbol _varSymbol;
-    private SymbolTable _symbolTable = new SymbolTable();
+    private String _varName;    // Aux nome da variável
+    private String _varType;    // Aux tipo da variável
+    private String _varValue;   // Aux valor da variável
+    private Symbol _varSymbol;  // Aux simbolo
+    private SymbolTable _symbolTable = new SymbolTable();   // Tabela de simbolos
 
     private String _var;
 
-    private String _varAtrib = "";
-    private String _varExp = "";
-    private String _condition = "";
+    private String _varAtrib = "";  // Aux para comando de atribuição
+    private String _varExp = "";    // Aux para expressao
+    private String _condition = ""; // Aux para condicao
 
-    private ArrayList<Command> listCmd = new ArrayList<Command>();
-    private ArrayList<Command> listCmdAux = new ArrayList<Command>();
+    private ArrayList<Command> listCmd = new ArrayList<Command>();  // Lista de comandos
+    private ArrayList<Command> listCmdAux = new ArrayList<Command>();   // Lista de comandos auxiliar
 
-    private ArrayList<Command> listTrue = new ArrayList<Command>();
-    private ArrayList<Command> listFalse = new ArrayList<Command>();
+    private ArrayList<Command> listTrue = new ArrayList<Command>(); // Lista de comandos para o if
+    private ArrayList<Command> listFalse = new ArrayList<Command>();    // Lista de comandos para o else
 
     private GyhProgram program = new GyhProgram();
 
-    public void generateCommand(String filename){
+    // Metodo para gerar o código em C
+    public void generateCommand(String filename) {
         program.generateTarget(filename);
     }
 
+    // Metodo para verificar se uma variável foi declarada e marcar que essa variável foi utilizada
     public void verificarVar(String nomeVar){
         if(!_symbolTable.contains(nomeVar)){
             throw new RuntimeException("Erro semantico: variavel \"" + nomeVar + "\" não declarada");
@@ -41,7 +45,7 @@ grammar GyhLang;
 
 programa: Delim 'DEC' listaDeclaracoes Delim 'PROG' listaComandos EOF
 {
-    // verificar se todas as variaveis foram utilizadas
+    // Verificar se todas as variaveis foram utilizadas
     _symbolTable.getSymbolTable().forEach((key, value) -> {
         if (!value.foiUtilizada()) {
             System.out.println("Warning: Variavel \"" + value.getName() + "\" declarada, mas nao utilizada.\n");
@@ -60,6 +64,7 @@ declaracao: Var Delim tipoVar
     _varType = _input.LT(-1).getText();
     _varSymbol = new Symbol(_varName, _varType);
 
+    // Adiciona uma variável a lista de simbolos se essa variável já não foi declarada anteriomente
     if(!_symbolTable.contains(_varSymbol.getName())) {
         _symbolTable.addSymbol(_varSymbol);
     } else {
@@ -69,13 +74,15 @@ declaracao: Var Delim tipoVar
 
 tipoVar: 'INT' | 'REAL';
 
+// Monta a expressao atitimética
 expressaoAritmetica: expressaoAritmetica '+'{_varExp+=_input.LT(-1).getText();} termoAritmetico
                     | expressaoAritmetica '-' termoAritmetico
                     | termoAritmetico;
 
+// Monta o termo aritimético
 termoAritmetico:    termoAritmetico '*'{_varExp+=_input.LT(-1).getText();} fatorAritmetico
                     | termoAritmetico '/'   {
-                                                _varExp+=_input.LT(-1).getText();
+                                                _varExp+=_input.LT(-1).getText();   // Se era pra ser atribuido um INT e foi atribuido um REAL monta um erro
                                                 if(_varType.equals("INT")){
                                                     throw new RuntimeException("Erro semantico: Tipo de variavel INT, valor a ser atribuido REAL");
                                                 }
@@ -83,9 +90,10 @@ termoAritmetico:    termoAritmetico '*'{_varExp+=_input.LT(-1).getText();} fator
                     fatorAritmetico
                     | fatorAritmetico;
 
+// Monta o fator aritimético
 fatorAritmetico: '-'? {if (_input.LT(-1).getText().equals("-")) _varExp+=_input.LT(-1).getText();}
                 NumInt {
-                            try {
+                            try {   // Verifica overflow
                                 Integer.parseInt(_input.LT(-1).getText());
                             } catch (NumberFormatException e) {
                                 throw new RuntimeException("Erro semantico: INT Overflow");
@@ -94,7 +102,7 @@ fatorAritmetico: '-'? {if (_input.LT(-1).getText().equals("-")) _varExp+=_input.
                         }
                 | '-'? {if (_input.LT(-1).getText().equals("-")) _varExp+=_input.LT(-1).getText();}
                 NumReal {
-                            if(_varType.equals("INT")){
+                            if(_varType.equals("INT")){ // Se for um REAL mas foi recebido um INT, mostra um erro
                                 throw new RuntimeException("Erro semantico: Tipo de variavel INT, valor a ser atribuido REAL");
                             }
                             String[] digitos = _input.LT(-1).getText().split("\\.");
@@ -103,10 +111,10 @@ fatorAritmetico: '-'? {if (_input.LT(-1).getText().equals("-")) _varExp+=_input.
                                 System.out.println("\nWarning: Variavel excede a precisao maxima de 8 digitos. Valor truncado.");
                                 System.out.println(_input.LT(-1).getText() + " -> " + digitos[0] + "." + digitos[1].substring(0, 8) + "\n");
                                 real = digitos[0] + "." + digitos[1].substring(0, 8);
-                            }
+                            }   // Verifica se o numero real excede a precisao maxima
                             if (Float.parseFloat(real) > 10E18 || Float.parseFloat(real) < -10E18) {
                                 throw new RuntimeException("Erro semantico: REAL Overflow");
-                            }
+                            }   // Verifica overflow
                             _varExp+=real;
                         }
                 | '-'? {if (_input.LT(-1).getText().equals("-")) _varExp+=_input.LT(-1).getText();}
@@ -119,13 +127,14 @@ fatorAritmetico: '-'? {if (_input.LT(-1).getText().equals("-")) _varExp+=_input.
                     }
                 | '(' {_varExp+=_input.LT(-1).getText();} expressaoAritmetica ')'{_varExp+=_input.LT(-1).getText();};
 
+// Monta o operador booleano
 operadorBooleano: 'E' {_varExp+=" && ";}
                 | 'OU' {_varExp+=" || ";};
 
 listaComandos: (comando
                     {
-                        listCmd.addAll(listCmdAux);
-                        listCmdAux.removeAll(listCmdAux);
+                        listCmd.addAll(listCmdAux); // Preenche a lista de comandos com a lista auxiliar
+                        listCmdAux.removeAll(listCmdAux);   // Esvazia a lista de comandos auxiliar
                     }
                 )+;
 
