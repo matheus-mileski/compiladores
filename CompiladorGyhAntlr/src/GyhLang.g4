@@ -63,7 +63,7 @@ declaracao: Var Delim tipoVar
     if(!_symbolTable.contains(_varSymbol.getName())) {
         _symbolTable.addSymbol(_varSymbol);
     } else {
-        System.out.println("Erro semantico: variavel " + _varSymbol.toString() + " já existe!");
+        throw new RuntimeException("Erro semantico: variavel " + _varSymbol.toString() + " já existe!");
     }
 };
 

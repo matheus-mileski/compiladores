@@ -194,13 +194,15 @@ public class GyhLangParser extends Parser {
 			setState(42);
 			match(EOF);
 
-			_symbolTable.getSymbolTable().forEach((key, value) -> {
-			    if (!value.foiUtilizada()) {
-			        System.out.println("Warning: Variavel \"" + value.getName() + "\" declarada, mas nao utilizada.\n");
-			    }
-			});
-			program.setVarTable(_symbolTable);
-			program.setCommand(listCmd);
+			    // verificar se todas as variaveis foram utilizadas
+			    _symbolTable.getSymbolTable().forEach((key, value) -> {
+			        if (!value.foiUtilizada()) {
+			            System.out.println("Warning: Variavel \"" + value.getName() + "\" declarada, mas nao utilizada.\n");
+			        }
+			    });
+
+			    program.setVarTable(_symbolTable);
+			    program.setCommand(listCmd);
 
 			}
 		}
@@ -313,14 +315,14 @@ public class GyhLangParser extends Parser {
 			setState(52);
 			tipoVar();
 
-			_varName = _input.LT(-3).getText();
-			_varType = _input.LT(-1).getText();
-			_varSymbol = new Symbol(_varName, _varType);
+			    _varName = _input.LT(-3).getText();
+			    _varType = _input.LT(-1).getText();
+			    _varSymbol = new Symbol(_varName, _varType);
 
-			if(!_symbolTable.contains(_varSymbol.getName())) {
-			    _symbolTable.addSymbol(_varSymbol);
-			} else {
-			    System.out.println("Erro semantico: variavel " + _varSymbol.toString() + " já existe!");
+			    if(!_symbolTable.contains(_varSymbol.getName())) {
+			        _symbolTable.addSymbol(_varSymbol);
+			    } else {
+			        throw new RuntimeException("Erro semantico: variavel " + _varSymbol.toString() + " já existe!");
 			    }
 
 			}

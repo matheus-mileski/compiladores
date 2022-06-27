@@ -3,7 +3,6 @@ import java.util.Hashtable;
 
 public class SymbolTable {
 
-
     private Hashtable<String, Symbol> symbolTable;
 
     public SymbolTable() {

@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.*;
 
 public class Main {
     public static void main(String[] args) {
-        String filename = "programa1.gyh";
+        String filename = "testes/programa3.gyh";
         try {
             CharStream charStream = CharStreams.fromFileName(filename);
 
