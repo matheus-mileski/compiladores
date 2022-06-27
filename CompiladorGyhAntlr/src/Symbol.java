@@ -5,6 +5,7 @@ public class Symbol {
     private boolean utilizada;  // Indicador se a variável foi utilizada no programa
     public static final int INT = 0;
     public static final int REAL = 1;
+
     public Symbol(String name, String type) {
         this.name = name;
 
@@ -13,12 +14,15 @@ public class Symbol {
         else
             this.type = REAL;
     }
+
     public String getName() {
         return name;
     }
+
     public int getType() {
         return type;
     }
+
     public String getTypeStr() {
         // Retorna o tipo da variável
         if (type == 0)
@@ -26,12 +30,15 @@ public class Symbol {
 
         return "REAL";
     }
+
     public void setUtilizada() {
         this.utilizada = true;
     }
+
     public boolean foiUtilizada() {
         return utilizada;
     }
+
     @Override
     public String toString() {
         if (this.type == 0) {
@@ -40,9 +47,9 @@ public class Symbol {
             return ("Simbolo: (nome: " + name + ", tipo: REAL)");
         }
     }
+
     public String generateCode() {
         // Retorna o códico em C para a declaração da variável
-        String str;
 
         if (type == INT) {
             return "\tint " + name + ";\n";

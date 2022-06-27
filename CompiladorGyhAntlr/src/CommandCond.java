@@ -1,15 +1,19 @@
 // Classe para gerar o código do comando de condicional.
 
 import java.util.ArrayList;
+
 public class CommandCond extends Command {
     private String condition;   // Condição do if
     private ArrayList<Command> listTrue;    // Lista de comandos se a condição for verdadeira
     private ArrayList<Command> listFalse;   // Lista de comandos se a condição for falsa
+
     public CommandCond(String condition, ArrayList<Command> listTrue, ArrayList<Command> listFalse) {
         this.condition = condition;
         this.listTrue = new ArrayList<>(listTrue);
-        this.listFalse = new ArrayList<>(listFalse);;
+        this.listFalse = new ArrayList<>(listFalse);
+        ;
     }
+
     @Override
     public String generateCode() {
         // Inicia o string da condição

@@ -3,15 +3,19 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+
 public class GyhProgram {
     private SymbolTable varTable;   // Lista de variáveis declaradas
     private ArrayList<Command> command; // Lista de comandos
+
     public void setCommand(ArrayList<Command> commands) {
         this.command = commands;
     }
+
     public void setVarTable(SymbolTable varTable) {
         this.varTable = varTable;
     }
+
     public void generateTarget(String filename) {
         // Inicia um string com o conteúdo a ser escrito no arquivo
         StringBuilder str = new StringBuilder();

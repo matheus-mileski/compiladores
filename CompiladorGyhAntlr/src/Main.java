@@ -1,7 +1,14 @@
-// Programa principal
+// Julio Ribeiro e Matheus Mileski
+// Vídeos:
+// - Analisador Léxico: https://www.youtube.com/watch?v=e4KjLvzrIB4
+// - Analisador Sintático: https://youtu.be/-JOJBlEuDyM
+// - Analisador Semântico: https://youtu.be/CDxI334Gr1A
+// - Compilador ANTLR: https://youtu.be/8_AoxqiR4K0
 
 import java.io.IOException;
+
 import org.antlr.v4.runtime.*;
+
 public class Main {
     public static void main(String[] args) {
         // Nome do arquivo do programa gyh
@@ -28,11 +35,10 @@ public class Main {
             parser.removeErrorListeners();
             parser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
-            // Chama o programa principal da gramatica gyh
+            // Chama o programa principal da gramática gyh
             parser.programa();
 
-
-            parser.generateCommand(filename.substring(0,filename.length()-4));
+            parser.generateCommand(filename.substring(0, filename.length() - 4));
 
         } catch (IOException exception) {
             exception.printStackTrace();
